@@ -25,6 +25,12 @@ def term_label(strm):
     term = sem + ' ' + year
     return term
 
+def term_label_list(strms):
+    semesters = []
+    for strm in strms:
+        term = term_label(strm)
+        semesters.append(term)
+    return semesters
 
 def previous_term(strm):
     #returns previous fall or spring term

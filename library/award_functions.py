@@ -21,7 +21,8 @@ def gpa_calc(df):
             'E': 0,
             'XE': 0}
         for l in grdpt:
-            df['Crse Grade Off'][df['Crse Grade Off'] == l] = grdpt[l]
+            grade_mask = df['Crse Grade Off'] == l
+            df.loc[grade_mask] = grdpt[l]
         pts = df['Crse Grade Off'] * df['Unt Taken']
         return np.sum(pts) / np.sum(df['Unt Taken'])
 
@@ -34,7 +35,7 @@ def subject_GPA(sub, df):
 
 def drop_dup(df):
     k = ['Emplid', 'Strm', 'Class Nbr']
-    return df.drop_duplicates(cols=k)
+    return df.drop_duplicates(subset=k)
 
 
 def strm_con(strm):

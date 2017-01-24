@@ -6,6 +6,7 @@
 import sys
 sys.path.append('/Users/cmcdanie/Dropbox/python/ECNdepartment/library/')
 import pandas as pd
+from term_functions import previous_term
 
 
 def prof_email(input_file, output_file):

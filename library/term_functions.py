@@ -35,3 +35,16 @@ def previous_term(strm):
     if term_str[3] == '1':
         pre_term = strm - 4
     return pre_term
+
+
+def spring_fall_only(strms):
+    #returns only summer and fall from a
+    #list of terms
+    terms = []
+    for strm in strms:
+        term_str = str(strm)
+        if term_str[3] == '4':
+            terms = terms
+        else:
+            terms.append(int(term_str))
+    return terms

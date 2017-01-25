@@ -7,16 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from term_functions import previous_term, spring_fall_only, term_label_list
 
-y = report_terms
-y_label = term_label_list(y)
-x1 = df_count['Total']
-x2 = df_count['Total']
-fig, ax = plt.subplots(ncols=2, sharey=True)
-ax[0].barh(y, x1, align='center', color='gray')
-ax[1].barh(y, x2, align='center', color='gray')
-ax[0].invert_xaxis()
-plt.show()
-
 
 def all_stu_count(file_nm, term_range, plans):
 #This function returns a datframe of enrollments by plan
@@ -41,15 +31,38 @@ def all_stu_count(file_nm, term_range, plans):
             tot = len(tbl.loc[term_mask].loc[level_mask])
             df_count.loc[term][level] = tot
     df_count['Total'] = df_count[cols[0:-1]].sum(axis=1)
+    df_count = df_count.sort_index()
     return df_count
 
 
-def all_stu_plot(file_nm, term_range):
-    #default plan are BAECNBS and LAECNBS
-    df_count_BAECNBS = all_stu_count(file_nm, term_range, ['BAECNBS'])
-    df_count_LAECNBS = all_stu_count(file_nm, term_range, ['LAECNBS'])
+def plot_majors_by_level(infile, term_range, outfile):
+    dftot = all_stu_count(infile, term_range, ['BAECNBS', 'LAECNBS'])
+    dfWPC = all_stu_count(infile, term_range, ['BAECNBS'])
+    dfCLAS = all_stu_count(infile, term_range, ['LAECNBS'])
+    terms = list(dfWPC.index)
+    dfs = [dfWPC, dfCLAS]
+    y_pos = np.arange(len(terms))
+    levels = list(dfWPC.columns)
+    colors = ['xkcd:faded pink', 'xkcd:light gray blue',
+              'xkcd:greenish tan', 'xkcd:sandy yellow']
+    val = dftot['Total']
+    fig, ax = plt.subplots()
+    for ind in range(0, len(levels) - 1):
+        ax.bar(y_pos, val, color=colors[ind],
+               edgecolor='black', align='center', label=levels[ind])
+        ax.set_xticks(y_pos)
+        ax.set_xticklabels(term_label_list(terms))
+        ax.set_yticks(np.arange(0, 1800, 50), minor=True)
+        ax.bar(y_pos, val - dfs[1][levels[ind]], color=colors[ind],
+               edgecolor='black', hatch='///', align='center')
+        ax.set_yticks(np.arange(0, 1500, 50), minor=True)
+        plt.legend(loc=2)
+        val = val - dftot[levels[ind]]
+        ax.grid(which='both', color='k', linestyle=':', linewidth=0.5)
+        plt.savefig(outfile)
+    plt.show()
 
-    fig, axes = plt.subplots(ncols=2, sharey=True)
+
 
 #Strm                  12945 non-null int64
 #Acad Org              12943 non-null object

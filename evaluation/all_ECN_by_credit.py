@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from term_functions import previous_term, spring_fall_only, term_label_list
+from matplotlib.patches import Rectangle
 
 
 def all_stu_count(file_nm, term_range, plans):
@@ -46,21 +47,31 @@ def plot_majors_by_level(infile, term_range, outfile):
     colors = ['xkcd:faded pink', 'xkcd:light gray blue',
               'xkcd:greenish tan', 'xkcd:sandy yellow']
     val = dftot['Total']
-    plt.matplotlib.rcParams.update({'font.size': 14})
-    fig, ax = plt.subplots(figsize=(12, 8))
+    plt.matplotlib.rcParams.update({'font.size': 12})
+    fig, ax = plt.subplots(figsize=(8, 6))
     for ind in range(0, len(levels) - 1):
         ax.bar(y_pos, val, color=colors[ind],
                edgecolor='black', align='center', label=levels[ind])
         ax.set_xticks(y_pos)
         ax.set_xticklabels(term_label_list(terms))
-        ax.set_yticks(np.arange(0, 1800, 50), minor=True)
+        ax.set_yticks(np.arange(0, 1600, 50), minor=True)
+        ax.set_ylim([0, 1400])
         ax.bar(y_pos, val - dfs[1][levels[ind]], color=colors[ind],
                edgecolor='black', hatch='///', align='center')
-        plt.legend(loc=2)
+        #ax.yaxis.grid(which='both', color='k', linestyle=':', linewidth=0.5)
+        p = Rectangle((0, 0), 1, 1, fc="lightgray", edgecolor='black',
+                      hatch='///')
+        pp = Rectangle((0, 0), 1, 1, fc="lightgray", edgecolor='black')
+        second_legend = plt.legend([p, pp], ["WPC", "CLAS"], loc=1,
+                                   framealpha=0.01)
+        plt.legend(loc=2, framealpha=0.1)
+        plt.gca().add_artist(second_legend)
         val = val - dftot[levels[ind]]
-        ax.grid(which='both', color='k', linestyle=':', linewidth=0.5)
         plt.savefig(outfile)
     plt.show()
+
+
+#def plot_majors_by_level_side(infile, term_range, outfile):
 
 
 

@@ -55,7 +55,6 @@ def plot_majors_by_level(infile, term_range, outfile):
         ax.set_yticks(np.arange(0, 1800, 50), minor=True)
         ax.bar(y_pos, val - dfs[1][levels[ind]], color=colors[ind],
                edgecolor='black', hatch='///', align='center')
-        ax.set_yticks(np.arange(0, 1500, 50), minor=True)
         plt.legend(loc=2)
         val = val - dftot[levels[ind]]
         ax.grid(which='both', color='k', linestyle=':', linewidth=0.5)
@@ -93,3 +92,4 @@ def plot_majors_by_level(infile, term_range, outfile):
 #Gender Cd             12945 non-null object
 #Tot Trnsfr            12945 non-null float64
 #Asu Citzn Country     12945 non-null object
+#Residency             12945 non-null object

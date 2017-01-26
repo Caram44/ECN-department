@@ -46,7 +46,8 @@ def plot_majors_by_level(infile, term_range, outfile):
     colors = ['xkcd:faded pink', 'xkcd:light gray blue',
               'xkcd:greenish tan', 'xkcd:sandy yellow']
     val = dftot['Total']
-    fig, ax = plt.subplots()
+    plt.matplotlib.rcParams.update({'font.size': 14})
+    fig, ax = plt.subplots(figsize=(12, 8))
     for ind in range(0, len(levels) - 1):
         ax.bar(y_pos, val, color=colors[ind],
                edgecolor='black', align='center', label=levels[ind])

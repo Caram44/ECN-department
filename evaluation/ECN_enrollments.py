@@ -27,6 +27,13 @@ def enrollment_count(input_file, term, output_file):
     enrollment.to_csv('/Users/cmcdanie/ECN_dept_data/output/class_enrollment' + str(term) + '.csv')
     return enrollment
 
+#Enrollments by professor and term
+def class_prof_term(input_file, term):
+    tbl = pd.read_csv(input_file, parse_dates=True, engine='python')
+    tbl = tbl[tbl['Strm'] == term]
+    classes = tbl['Cass Nbr']
+
+
 #Strm                  9325 non-null int64
 #Term                  9325 non-null object
 #Subject               9325 non-null object

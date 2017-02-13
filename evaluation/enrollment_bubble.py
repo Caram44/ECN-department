@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from term_functions import previous_term, spring_fall_only, term_label_list
 from ECN_enrollments import enrollment_count
 
-file_nm = '/Users/cmcdanie/ECN_dept_data/input/ECN_enrollment_2171.csv'
+file_nm = '/Users/cmcdanie/ECN_dept_data/input/ECN_enrollment_2117_2171.csv'
 
 tbl = pd.read_csv(file_nm, parse_dates=True, engine='python')
 tbl = tbl.drop_duplicates()
@@ -26,8 +26,8 @@ fig, ax = plt.subplots()
 ax.scatter(df_counts.index, df_counts['Count']/tot, s=df_counts['Count'])
 plt.show()
 
-profs = df_counts['Primary Instructor'].unique()
-courses = df_counts['Catalog Nbr'].unique()
+profs = tbl['Primary Instructor'].unique()
+courses = tbl['Catalog Nbr'].unique()
 lower = courses[courses < 300]
 theory = [312, 313, 410, 425]
 electives = [306, 315, 331, 355, 394]
